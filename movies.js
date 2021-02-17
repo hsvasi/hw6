@@ -17,6 +17,13 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // movies. Write the contents of this array to the JavaScript
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
+  let db = firebase.firestore()
+
+  let apiKey = `a6b202b40dbf2dde0a60f81fbfcb68f7`
+  let response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`)
+  let movies = await response.json()
+  
+  console.log(movies)
 
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
@@ -33,7 +40,32 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
   // </div>
   // ⬇️ ⬇️ ⬇️
+  for (let i=0; i<movies.results.length; i++){
+  let header = document.querySelector('.movies')
+  header.insertAdjacentHTML("beforeend", `<div class="w-1/5 p-4 movie-${movies.results[i].id}">
+     <img src="https://image.tmdb.org/t/p/w500${movies.results[i].poster_path}" class="w-full">
+     <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
+   </div>`)
 
+   let currentDoc = await db.collection('movies').doc(`${movies.results[i].id}`).get()
+   let exists = currentDoc.exists
+   if(exists){
+    document.querySelector(`.movie-${movies.results[i].id}`).classList.add('opacity-20')
+   }
+
+   document.querySelector(`.movie-${movies.results[i].id} .watched-button`).addEventListener('click', async function(event) {
+    event.preventDefault()
+    if(document.querySelector(`.movie-${movies.results[i].id}`).classList.contains('opacity-20')){
+      document.querySelector(`.movie-${movies.results[i].id}`).classList.remove('opacity-20')
+      db.collection('movies').doc(`${movies.results[i].id}`).delete()
+    }
+    else{
+      document.querySelector(`.movie-${movies.results[i].id}`).classList.add('opacity-20')
+      db.collection('movies').doc(`${movies.results[i].id}`).set({})
+    }
+    })
+
+  }
   // ⬆️ ⬆️ ⬆️ 
   // End Step 2
 
