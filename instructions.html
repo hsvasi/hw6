@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIEI-451: Week 6 Homework Instructions</title>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body class="p-8 line-numbers">
+  <div class="container mx-auto space-y-4">
+    <h1 class="text-4xl">Week 6 Homework</h1>
+    <p>In this exercise, you will build a small application that consumes "serverless" data from a public API of movies. This application will get movies "now playing" and allow the end-user to maintain a "watchlist" (i.e. watched vs. not watched) movies on the list.</p>
+
+    <h2 class="text-2xl">The TMDB API</h2>
+    
+    <p>First, sign up for an account at <a href="https://themoviedb.org" class="text-pink-500 underline">https://themoviedb.org</a></p>
+    <p>Once verified and signed-in, go to Settings and create a new
+    API key; in the form, indicate that you'll be using this API
+    key for educational or personal use, and you should receive
+    your new key right away.</p>
+    <p>For this exercise, we'll be using the "now playing" API endpoint
+    <span class="bg-orange-100 text-red-400 font-mono p-1">https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US</span></p>
+    <p>Note: image data returned by the API will only give you the filename;
+    prepend with <span class="bg-orange-100 text-red-400 font-mono p-1">https://image.tmdb.org/t/p/w500/</span> to get the complete image URL.</p>
+    <p>Also note: the data from TMDB can change; it's live data with the latest movies "now playing". This is ok... keep calm and code on.</p>
+
+    <h2 class="text-2xl">Requirements and Rubric</h2>
+
+    <p>(These are high-level requirements for grading; more detailed mechanics are included in the comments of <span class="bg-orange-100 text-red-400 font-mono p-1">movies.js</span>.)</p>
+
+    <ul class="list-inside list-disc">
+      <li>Create a new brand-new repository in your GitHub account called <span class="bg-orange-100 text-red-400 font-mono p-1">hw6</span>. Clone and open the code in VSCode. Add an HTML page and corresponding JS file – you can use the provided <span class="bg-orange-100 text-red-400 font-mono p-1">movies.html</span> and <span class="bg-orange-100 text-red-400 font-mono p-1">movies.js</span> as a starting point.</li>
+      <li>(2 points) Construct a URL to <span class="bg-orange-100 text-red-400 font-mono p-1">fetch</span> playing now from TMDB. Write the contents of this array to the JavaScript
+      console to ensure you've got good data.</li>
+      <li>(2 points) Loop through the Array of movies and insert HTML into the existing DOM element with the class name <span class="bg-orange-100 text-red-400 font-mono p-1">.movies</span> to display the poster of each movie. Include a "watched" button to click for each movie.</li>
+      <li>(2 points) When the "watched button" is clicked, make the movie poster and corresponding "watched" button opaque. The result, at this point, should be a watchlist application that allows the user to click movies to mark them "watched", but will reset when the page is refreshed.</li>
+      <li>(4 points) Properly configure Firebase and Firebase Cloud Firestore in your application. Persist "watched" movies to Firestore; i.e. when you refresh the page, the lesser opacity of watched movies should persist.</li>
+    </ul>
+  </div>
+</body>
+
+</html>
